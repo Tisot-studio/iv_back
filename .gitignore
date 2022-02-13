@@ -1,0 +1,8 @@
+myenv/
+__pycache__/
+
+iv_back/my.py
+
+*.sqlite3
+
+static
