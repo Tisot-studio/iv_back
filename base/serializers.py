@@ -6,19 +6,20 @@ from .models import *
 class LinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Link
-        fields = '__all__'
+        fields = ('spotify', 'beatport', 'itunes', 'soundcloud',)
 
 
 class ReleaseSerializer(serializers.ModelSerializer):
-
+    links = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Release
         fields = '__all__'
     
     def get_links(self, obj):
-        links = LinkSerializer(obj.links, many=False).data
-        return links
+        items = obj.link
+        serializer = LinkSerializer(items, many=False)
+        return serializer.data
 
 
 class PodcastSerializer(serializers.ModelSerializer):
